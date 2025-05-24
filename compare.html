@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codeforces User Comparison</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="material-icons">compare_arrows</span> Codeforces User Comparison</h1>
+            <a href="index.html" class="nav-link">
+                <span class="material-icons">home</span>
+                Back to Home
+            </a>
+        </header>
+
+        <div class="comparison-controls">
+            <div class="add-user-section">
+                <div class="search-box">
+                    <span class="material-icons search-icon">search</span>
+                    <input type="text" id="username-input" placeholder="Enter Codeforces username">
+                    <button id="add-user-btn">
+                        <span class="material-icons">person_add</span>
+                        Add User
+                    </button>
+                </div>
+            </div>
+            <div class="comparison-actions">
+                <button id="clear-all-btn" class="secondary-button">
+                    <span class="material-icons">clear_all</span>
+                    Clear All
+                </button>
+            </div>
+        </div>
+
+        <div class="comparison-table-container">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th title="Codeforces Username">User</th>
+                        <th title="Current Codeforces Rank"><span class="material-icons">military_tech</span> Rank</th>
+                        <th title="Current Rating"><span class="material-icons">trending_up</span> Rating</th>
+                        <th title="Minimum Rating Achieved"><span class="material-icons">trending_down</span> Min</th>
+                        <th title="Maximum Rating Achieved"><span class="material-icons">trending_up</span> Max</th>
+                        <th title="Total Problems Solved"><span class="material-icons">check_circle</span> Solved</th>
+                        <th title="Total Submissions Made"><span class="material-icons">send</span> Submissions</th>
+                        <th title="Percentage of Successful Submissions"><span class="material-icons">percent</span> Success</th>
+                        <th title="Total Contests Participated"><span class="material-icons">emoji_events</span> Contests</th>
+                        <th title="Best Rank in Contests"><span class="material-icons">stars</span> Best Rank</th>
+                        <th title="Highest Rated Problem Solved"><span class="material-icons">arrow_upward</span> Max Rated</th>
+                        <th title="Lowest Rated Problem Solved"><span class="material-icons">arrow_downward</span> Min Rated</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="comparison-table-body">
+                    <!-- User rows will be added here dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="error-message" class="error-message hidden">
+            <span class="material-icons">error</span>
+            <span id="error-text"></span>
+        </div>
+    </div>
+
+    <script src="compare.js"></script>
+</body>
+</html> 

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codeforces User Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="material-icons">code</span> Codeforces User Analyzer</h1>
+            <div id="user-dropdown" class="user-dropdown hidden">
+                <button class="dropdown-trigger">
+                    <span id="dropdown-username"></span>
+                    <span class="material-icons">arrow_drop_down</span>
+                </button>
+                <div class="dropdown-menu">
+                    <button id="change-user-btn">
+                        <span class="material-icons">person</span>
+                        Change User
+                    </button>
+                    <button id="settings-btn">
+                        <span class="material-icons">settings</span>
+                        Settings
+                    </button>
+                </div>
+            </div>
+            <a href="compare.html" class="nav-link">
+                <span class="material-icons">compare_arrows</span>
+                Compare Users
+            </a>
+        </header>
+        
+        <div id="search-section" class="search-section">
+            <div class="search-box">
+                <span class="material-icons search-icon">search</span>
+                <input type="text" id="username" placeholder="Enter Codeforces username">
+                <button id="search-btn">
+                    <span class="material-icons">analytics</span>
+                    Analyze
+                </button>
+            </div>
+        </div>
+
+        <div id="user-info" class="user-info hidden">
+            <div class="profile-section">
+                <div class="profile-header">
+                    <div class="avatar-container">
+                        <img id="user-avatar" src="" alt="User Avatar">
+                        <div class="rank-badge" id="rank-badge"></div>
+                    </div>
+                    <div class="profile-details">
+                        <h2 id="user-name"></h2>
+                        <div class="user-meta">
+                            <p id="user-rank" class="rank-text"></p>
+                            <p id="user-rating" class="rating-text"></p>
+                        </div>
+                        <div class="user-location">
+                            <span class="material-icons">location_on</span>
+                            <span id="user-country"></span>
+                        </div>
+                        <div class="user-org">
+                            <span class="material-icons">business</span>
+                            <span id="user-organization"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <span class="material-icons">emoji_events</span>
+                        <h3>Contest Statistics</h3>
+                        <button id="show-rating-graph" class="icon-button">
+                            <span class="material-icons">show_chart</span>
+                        </button>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="material-icons">groups</span>
+                            <span class="stat-label">Total Contests</span>
+                            <span id="total-contests" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">military_tech</span>
+                            <span class="stat-label">Best Rank</span>
+                            <span id="best-rank" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">trending_up</span>
+                            <span class="stat-label">Max Rating</span>
+                            <span id="max-rating" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">trending_down</span>
+                            <span class="stat-label">Min Rating</span>
+                            <span id="min-rating" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">calculate</span>
+                            <span class="stat-label">Mean Rating</span>
+                            <span id="mean-rating" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">analytics</span>
+                            <span class="stat-label">Median Rating</span>
+                            <span id="median-rating" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">scatter_plot</span>
+                            <span class="stat-label">Rating Std Dev</span>
+                            <span id="std-rating" class="stat-value">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <span class="material-icons">psychology</span>
+                        <h3>Problem Statistics</h3>
+                    </div>
+                    <div class="stat-grid">
+                        <div class="stat-item">
+                            <span class="material-icons">check_circle</span>
+                            <span class="stat-label">Solved Problems</span>
+                            <span id="solved-problems" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">send</span>
+                            <span class="stat-label">Total Submissions</span>
+                            <span id="total-submissions" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">percent</span>
+                            <span class="stat-label">Success Rate</span>
+                            <span id="success-rate" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">trending_up</span>
+                            <span class="stat-label">Highest Rated Solved</span>
+                            <span id="highest-rated-solved" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">trending_down</span>
+                            <span class="stat-label">Lowest Rated Solved</span>
+                            <span id="lowest-rated-solved" class="stat-value">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yearly Statistics Section -->
+        <div class="yearly-stats-section">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="material-icons">calendar_today</span>
+                    <h3>Yearly Statistics</h3>
+                </div>
+                <div class="yearly-stats-container">
+                    <div class="yearly-stats-filters">
+                        <button id="prev-year" class="icon-button">
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <span id="current-year" class="year-display">2024</span>
+                        <button id="next-year" class="icon-button">
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                    </div>
+                    <div class="yearly-stats-grid">
+                        <div class="stat-item">
+                            <span class="material-icons">check_circle</span>
+                            <span class="stat-label">Problems Solved</span>
+                            <span id="yearly-solved" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">send</span>
+                            <span class="stat-label">Total Submissions</span>
+                            <span id="yearly-submissions" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">percent</span>
+                            <span class="stat-label">Success Rate</span>
+                            <span id="yearly-success-rate" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">trending_up</span>
+                            <span class="stat-label">Highest Rated Solved</span>
+                            <span id="yearly-highest-rated" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">emoji_events</span>
+                            <span class="stat-label">Contests Participated</span>
+                            <span id="yearly-contests" class="stat-value">-</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="material-icons">military_tech</span>
+                            <span class="stat-label">Best Rank</span>
+                            <span id="yearly-best-rank" class="stat-value">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="error-message" class="error-message hidden">
+            <span class="material-icons">error</span>
+            <span id="error-text"></span>
+        </div>
+    </div>
+
+    <!-- Rating Graph Modal -->
+    <div id="rating-graph-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Contest Rating History</h2>
+                <button id="close-modal" class="icon-button">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <canvas id="rating-chart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
