@@ -18,6 +18,7 @@ const ratingChart = document.getElementById('rating-chart');
 const prevYearBtn = document.getElementById('prev-year');
 const nextYearBtn = document.getElementById('next-year');
 const currentYearDisplay = document.getElementById('current-year');
+const yearlyStatsSection = document.querySelector('.yearly-stats-section');
 
 // Cache key
 const CACHE_KEY = 'cf_username';
@@ -47,8 +48,10 @@ document.addEventListener('DOMContentLoaded', () => {
         usernameInput.value = cachedUsername;
         fetchUserData(cachedUsername);
         showUserDropdown(cachedUsername);
+        yearlyStatsSection.classList.remove('hidden');
     } else {
         showSearchSection();
+        yearlyStatsSection.classList.add('hidden');
     }
 });
 
@@ -173,6 +176,7 @@ clearUsernameCache.addEventListener('click', () => {
             localStorage.removeItem(USERNAME_CACHE_KEY);
             usernameInput.value = '';
             showError('Username cache cleared');
+            yearlyStatsSection.classList.add('hidden');
         }
     );
 });
@@ -194,6 +198,7 @@ clearAllCache.addEventListener('click', () => {
             localStorage.clear();
             usernameInput.value = '';
             showError('All cache cleared');
+            yearlyStatsSection.classList.add('hidden');
         }
     );
 });
@@ -209,6 +214,7 @@ function showSearchSection() {
     userDropdown.classList.add('hidden');
     searchSection.classList.remove('hidden');
     userInfo.classList.add('hidden');
+    yearlyStatsSection.classList.add('hidden');
     usernameInput.value = '';
     usernameInput.focus();
 }
@@ -235,12 +241,15 @@ async function fetchUserData(username) {
             updateUserProfile(user);
             updateUserStats(user, userSubmissions, userRatingHistory);
             userInfo.classList.remove('hidden');
+            yearlyStatsSection.classList.remove('hidden');
             showUserDropdown(username);
         } else {
             showError('User not found');
+            yearlyStatsSection.classList.add('hidden');
         }
     } catch (error) {
         showError('Error fetching user data');
+        yearlyStatsSection.classList.add('hidden');
         console.error('Error:', error);
     }
 }
