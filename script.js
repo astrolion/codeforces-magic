@@ -23,6 +23,10 @@ const currentYearDisplay = document.getElementById('current-year');
 const CACHE_KEY = 'cf_username';
 const YEAR_CACHE_KEY = 'cf_selected_year';
 
+// Cache Keys
+const USERNAME_CACHE_KEY = 'cf_last_username';
+const COMPARE_CACHE_KEY = 'cf_compared_users';
+
 // Chart instance
 let ratingChartInstance = null;
 let currentYear = new Date().getFullYear();
@@ -80,11 +84,6 @@ changeUserBtn.addEventListener('click', () => {
     dropdownMenu.classList.remove('active');
 });
 
-settingsBtn.addEventListener('click', () => {
-    // TODO: Implement settings functionality
-    dropdownMenu.classList.remove('active');
-});
-
 // Rating Graph Modal functionality
 showRatingGraphBtn.addEventListener('click', () => {
     ratingGraphModal.classList.remove('hidden');
@@ -123,6 +122,80 @@ nextYearBtn.addEventListener('click', () => {
         localStorage.setItem(YEAR_CACHE_KEY, currentYear);
         updateYearlyStats(userSubmissions, userRatingHistory);
     }
+});
+
+// Settings Modal Elements
+const settingsModal = document.getElementById('settings-modal');
+const closeSettings = document.getElementById('close-settings');
+const clearUsernameCache = document.getElementById('clear-username-cache');
+const clearCompareCache = document.getElementById('clear-compare-cache');
+const clearAllCache = document.getElementById('clear-all-cache');
+
+// Settings Modal Event Listeners
+settingsBtn.addEventListener('click', () => {
+    settingsModal.classList.remove('hidden');
+});
+
+closeSettings.addEventListener('click', () => {
+    settingsModal.classList.add('hidden');
+});
+
+// Cache Management Functions
+function showConfirmationDialog(message, onConfirm) {
+    const dialog = document.createElement('div');
+    dialog.className = 'confirmation-dialog';
+    dialog.innerHTML = `
+        <h3>Confirm Action</h3>
+        <p>${message}</p>
+        <div class="confirmation-actions">
+            <button class="cancel">Cancel</button>
+            <button class="confirm">Confirm</button>
+        </div>
+    `;
+
+    document.body.appendChild(dialog);
+
+    dialog.querySelector('.cancel').addEventListener('click', () => {
+        dialog.remove();
+    });
+
+    dialog.querySelector('.confirm').addEventListener('click', () => {
+        onConfirm();
+        dialog.remove();
+        settingsModal.classList.add('hidden');
+    });
+}
+
+clearUsernameCache.addEventListener('click', () => {
+    showConfirmationDialog(
+        'Are you sure you want to clear the username cache? This will remove the last searched username.',
+        () => {
+            localStorage.removeItem(USERNAME_CACHE_KEY);
+            usernameInput.value = '';
+            showError('Username cache cleared');
+        }
+    );
+});
+
+clearCompareCache.addEventListener('click', () => {
+    showConfirmationDialog(
+        'Are you sure you want to clear the comparison cache? This will remove all compared users.',
+        () => {
+            localStorage.removeItem(COMPARE_CACHE_KEY);
+            showError('Comparison cache cleared');
+        }
+    );
+});
+
+clearAllCache.addEventListener('click', () => {
+    showConfirmationDialog(
+        'Are you sure you want to clear all cache? This will remove all stored data.',
+        () => {
+            localStorage.clear();
+            usernameInput.value = '';
+            showError('All cache cleared');
+        }
+    );
 });
 
 // UI Functions

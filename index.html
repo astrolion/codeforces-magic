@@ -229,6 +229,37 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><span class="material-icons">settings</span> Settings</h2>
+                <button id="close-settings" class="icon-button">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h3>Cache Management</h3>
+                    <div class="settings-options">
+                        <button id="clear-username-cache" class="settings-button">
+                            <span class="material-icons">person_off</span>
+                            Clear Username Cache
+                        </button>
+                        <button id="clear-compare-cache" class="settings-button">
+                            <span class="material-icons">compare_arrows</span>
+                            Clear Comparison Cache
+                        </button>
+                        <button id="clear-all-cache" class="settings-button danger">
+                            <span class="material-icons">delete_forever</span>
+                            Clear All Cache
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html> 
